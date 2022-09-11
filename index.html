@@ -1,116 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="shortcut icon" href="./res/favicon.jpg" type="image/x-icon" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,500&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@1,500&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Trispace:wght@500&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Trispace&display=swap"
-      rel="stylesheet"
-    />
-
-
-    <title>Covid Tracker</title>
     <link rel="stylesheet" href="./index.css" />
     <script defer src="./index.js"></script>
+    <title>Covid Tracker</title>
   </head>
   <body>
-    <div class="heading">
-      <img src="./res/covid1.jpg" alt="" class="heading-img" />
-      <h1 class="heading-text">Covid-19 Tracker</h1>
-      <img src="./res/covid2.png" alt="" class="heading-img" />
-    </div>
-    <div class="buttons">
-      <button type="button" class="btn btn-update">Update List</button>
-      <button type="button" class="btn btn-infected-inc">
-        Sort Inc. By Infected
-      </button>
-      <button type="button" class="btn btn-infected-dec">
-        Sort Dec. By Infected
-      </button>
-      <button type="button" class="btn btn-recovered-inc">
-        Sort Inc. By Recovered
-      </button>
-      <button type="button" class="btn btn-recovered-dec">
-        Sort Dec. By Recovered
-      </button>
-      <button type="button" class="btn btn-death-inc">
-        Sort Inc. By Deceased
-      </button>
-      <button type="button" class="btn btn-death-dec">
-        Sort Dec. By Deceased
-      </button>
-    </div>
+    <div class="main">
 
-    <div class="search-div">
-      <input
-        type="text"
-        class="search-ip"
-        placeholder="Enter the Name of the Country to Search"
-      />
-      <br />
-      <button type="button" class="btn btn-view-full">
-        View Full List
-      </button>
-    </div>
-
-    <div class="world">
-      <h3 class="world-heading">World Stats:</h3>
-      <div class="card card-infected">
-        <div class="card-body">
-          <h5 class="card-title">Infected</h5>
-          <p class="card-text card-text-infected"></p>
-        </div>
+      <div class="heading">
+        <div class="virus-icon"></div>
+        <h1 class="heading-text">Covid-19 Tracker</h1>
       </div>
-      <div class="card card-recovered">
-        <div class="card-body">
-          <h5 class="card-title">Recovered</h5>
-          <p class="card-text card-text-recovered"></p>
+      <div class="world-stats">
+        <h3 class="world-heading">World Stats:</h3>
+        <div class="cards-container">
+          <div class="card card-infected">
+            <h5 class="card-title">Infected</h5>
+            <p class="card-text card-text-infected"></p>
+          </div>
+          <div class="card card-recovered">
+            <h5 class="card-title">Recovered</h5>
+            <p class="card-text card-text-recovered"></p>
+          </div>
+          <div class="card card-deceased">
+            <h5 class="card-title">Deceased</h5>
+            <p class="card-text card-text-deceased"></p>
+          </div>
         </div>
+        </div>
+      <div class="search-container">
+        <input
+          type="search"
+          class="search"
+          placeholder="Search for a country..."
+        />
       </div>
-      <div class="card card-deceased">
-        <div class="card-body">
-          <h5 class="card-title">Deceased</h5>
-          <p class="card-text card-text-deceased"></p>
-        </div>
+      <div class="table-container">
+        <table class="country-data">
+          <tbody>
+            <tr class="header-row">
+              <th class="country-header">Country</th>
+              <th class="infected-header">Infected</th>
+              <th class="recovered-header">Recovered</th>
+              <th class="deceased-header">Deceased</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="basis-of-sorting">
+          The list is sorted based on alphabetical ordering of country names.
       </div>
     </div>
-
-    <div class="basis-of-sorting">
-      <h3 class="list-sort-heading">
-        The List is Sorted Based on Alphabetical Ordering of Country Names
-      </h3>
-    </div>
-
-    <div class="heading-row">
-      <div class="country">Country</div>
-      <div class="infected">Infected</div>
-      <div class="recovered">Recovered</div>
-      <div class="deaths">Deceased</div>
-    </div>
-
-    <div class="main-container"></div>
-
   </body>
 </html>

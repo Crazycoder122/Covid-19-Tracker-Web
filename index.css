@@ -1,154 +1,220 @@
-.btn {
-  width: 180px;
-  height: 30px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007BFF;
-  color: #eeeeee;
+@import url('https://fonts.googleapis.com/css2?family=Baumans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+
+:root {
+  --country-bg: #f7ece4;
+  --infected-bg: #f7f5e4;
+  --recovered-bg: #e4f7e7;
+  --deceased-bg: #f7e4e4;
+  --country-header-bg: #f7e6d9;
+  --infected-header-bg: #f7f4d9;
+  --recovered-header-bg: #d9f7de;
+  --deceased-header-bg: #f7d9d9;
+  --country-hover-bg: #eae0d8;
+  --infected-hover-bg: #eae8d8;
+  --recovered-hover-bg: #d8eadb;
+  --deceased-hover-bg: #ead8d8;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  min-height: calc(100vh - 20px);
+  padding: 10px 0px;
+  background-color: #faf8f8;
+  justify-content: space-evenly;
+}
+
+.main > div {
+  margin: 10px 0px;
+}
+
+.cards-container {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .card {
-  width: 15vw;
-  display: inline-block;
-  background-color: aquamarine;
+  flex-grow: 1;
+  height: 80px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  font-family: 'Oxygen', sans-serif;
+}
+
+.card-infected {
+  background-color: var(--infected-bg);
+}
+
+.card-recovered {
+  background-color: var(--recovered-bg);
+}
+
+.card-deceased {
+  background-color: var(--deceased-bg);
 }
 
 .heading {
-  text-align: center;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  min-width: 20em;
 }
 
-.heading-img {
-  width: 5vw;
-  height: 10vh;
-  margin-left: 3vw;
-  margin-right: 3vw;
+.virus-icon {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url("./res/virus.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40px;
+  flex-basis: 50px;
 }
-
 
 .heading-text {
-  color: brown;
-  font-family: 'Josefin Sans', sans-serif;
-  display: inline;
+  color: #b85454;
+  font-family: 'Baumans', sans-serif;
+  line-height: 40px;
+}
+
+.table-container {
+  max-width: 100vw;
+  max-height: 55vh;
+  overflow: scroll;
+}
+
+.country-data {
+  min-width: 720px;
+  border-spacing: 0;
+  font-family: 'Oxygen', sans-serif;
+}
+
+td {
+  transition: all 0.2s ease;
+}
+
+.country-data th, .country-data td {
+  padding: 10px 5px;
+}
+
+tr:hover .country {
+  background-color: var(--country-hover-bg);
+}
+
+tr:hover .infected {
+  background-color: var(--infected-hover-bg);
+}
+
+tr:hover .recovered {
+  background-color: var(--recovered-hover-bg);
+}
+
+tr:hover .deceased {
+  background-color: var(--deceased-hover-bg);
+}
+
+.country-header {
+  background-color: var(--country-header-bg);
+}
+
+.infected-header {
+  background-color: var(--infected-header-bg);
+}
+
+.recovered-header {
+  background-color: var(--recovered-header-bg);
+}
+
+.deceased-header {
+  background-color: var(--deceased-header-bg);
 }
 
 .country {
-  display: inline-block;
-  width: 35vw;
-  height: fit-content;
-  background-color: burlywood;
-  font-size: 3.5vh;
-  margin-right: 0;
-  font-family: 'Source Code Pro', monospace;
-  line-height: 5vh;
+  background-color: var(--country-bg);
+  background-position: 10px center;
+  background-size: 25px;
+  background-repeat: no-repeat;
 }
 
 .infected {
-  display: inline-block;
-  width: 20vw;
-  height: fit-content;
-  font-size: 3.5vh;
-  background-color: yellow;
-  margin-right: 0;
-  font-family: 'Source Code Pro', monospace;
+  background-color: var(--infected-bg);
 }
 
 .recovered {
-  display: inline-block;
-  width: 20vw;
-  height: fit-content;
-  font-size: 3.5vh;
-  background-color: rgb(74, 228, 74);
-  margin-right: 0;
-  font-family: 'Source Code Pro', monospace;
+  background-color: var(--recovered-bg);
 }
 
-
-.deaths {
-  display: inline-block;
-  width:20vw;
-  height:fit-content;
-  font-size:3.5vh;
-  background-color: red;
-  font-family: 'Source Code Pro', monospace;
+.deceased {
+  background-color: var(--deceased-bg);
 }
 
-.heading-row, .data-row {
+.header, .data-row {
   text-align: center;
-  margin-top: 3vh;
+  color: #434343;
 }
 
 .buttons, .basis-of-sorting {
   text-align: center;
 }
 
-.list-sort-heading {
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-  color: rgba(70, 69, 9, 0.774);
-  font-family: 'Source Code Pro', monospace;
+.basis-of-sorting {
+  font-family: 'Oxygen', sans-serif;
+  color: #666666;
 }
 
-.flag {
-  width: 2vw;
-  height: 2vh;
+.world-stats, .search-container, .cards-container {
+  display: flex;
+  align-items: center;
+  max-width: 720px;
+  width: 100vw;
 }
 
-.search-div {
-  text-align: center;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
-}
-
-.search-ip {
-  width: 40vw;
-  height: 7.5vh;
-  border-radius: 10px;
-  outline: none;
-  font-size: 3.5vh;
-  margin-bottom: 2vh;
-}
-
-.search, .view-full {
-  border-radius: 7.5px;
-  outline: none;
-}
-
-.not-found {
-  margin-top: 5vh;
-  font-family: 'Trispace', sans-serif;
-  text-align: center;
-}
-
-.world {
-  text-align: center;
-}
-
-
-.infected-world, .dead-world, .recovered-world {
-  display: inline-block;
-  width: 15vw;
+h5 {
+  font-size: 15px;
 }
 
 .world-heading {
   text-align: center;
-  margin-top: 3vh;
-  margin-bottom: 3vh;
-  font-family: 'Trispace', sans-serif;
-  color: brown;
+  font-family: 'Baumans', sans-serif;
+  color: #b85454;
+  margin: 0;
+  margin-bottom: 10px;
 }
 
-.inf-world-count, .rec-world-count, .death-world-count {
-  margin-top: 3vh;
-  font-size: larger;
-  font-weight: bolder;
+.world-stats {
+  flex-flow: column wrap;
 }
 
-.ip-dec {
-  background-color: rgb(54, 121, 28);
+.search-container, .cards-container {
+  flex-flow: row wrap;
 }
 
-body {
-  background-color: cyan;
+.search {
+  flex-grow: 1;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  padding-left: 10px;
+  font-size: 1em;
+  background-color: #f7ebeb;
+  color: #502121;
 }
+
