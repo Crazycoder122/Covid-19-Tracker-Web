@@ -1,9 +1,23 @@
+.btn {
+  width: 180px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007BFF;
+  color: #eeeeee;
+}
+
+.card {
+  width: 15vw;
+  display: inline-block;
+  background-color: aquamarine;
+}
+
 .heading {
   text-align: center;
   margin-top: 5vh;
   margin-bottom: 5vh;
 }
-
 
 .heading-img {
   width: 5vw;
@@ -65,7 +79,7 @@
   margin-top: 3vh;
 }
 
-.buttons, .BasisOfSorting {
+.buttons, .basis-of-sorting {
   text-align: center;
 }
 

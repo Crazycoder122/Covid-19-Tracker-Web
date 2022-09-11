@@ -1,23 +1,23 @@
-var main_container=document.getElementsByClassName("main-container")[0];
-var country=document.getElementsByClassName("country");
-let infected=document.getElementsByClassName("infected");
-let recovered=document.getElementsByClassName("recovered");
-let deaths=document.getElementsByClassName("deaths");
-let update_btn=document.getElementsByClassName("update")[0];
-let inf_inc=document.getElementsByClassName("infected-inc")[0];
-let inf_dec=document.getElementsByClassName("infected-dec")[0];
-let rec_inc=document.getElementsByClassName("recovered-inc")[0];
-let rec_dec=document.getElementsByClassName("recovered-dec")[0];
-let dead_inc=document.getElementsByClassName("death-inc")[0];
-let dead_dec=document.getElementsByClassName("death-dec")[0];
-let list_sort_heading=document.getElementsByClassName("list-sort-heading")[0];
-let search_ip=document.getElementsByClassName("search-ip")[0];
-let view_full=document.getElementsByClassName("full-view")[0];
-let inf_world_count=document.getElementsByClassName("inf-world-count")[0];
-let rec_world_count=document.getElementsByClassName("rec-world-count")[0];
-let death_world_count=document.getElementsByClassName("death-world-count")[0];
-var api="https://disease.sh/v3/covid-19/countries";
-var world_api="https://disease.sh/v3/covid-19/all";
+var main_container = document.querySelector('.main-container');
+var country = document.querySelectorAll('.country');
+let infected = document.querySelectorAll('.infected');
+let recovered = document.querySelectorAll('.recovered');
+let deaths = document.querySelectorAll('.deaths');
+let update_btn = document.querySelector('.btn-update');
+let inf_inc = document.querySelector('.btn-infected-inc');
+let inf_dec = document.querySelector('.btn-infected-dec');
+let rec_inc = document.querySelector('.btn-recovered-inc');
+let rec_dec = document.querySelector('.btn-recovered-dec');
+let dead_inc = document.querySelector('.btn-death-inc');
+let dead_dec = document.querySelector('.btn-death-dec');
+let list_sort_heading = document.querySelector('.list-sort-heading');
+let search_ip = document.querySelector('.search-ip');
+let view_full = document.querySelector('.btn-view-full');
+let inf_world_count = document.querySelector('.card-text-infected');
+let rec_world_count = document.querySelector('.card-text-recovered');
+let death_world_count = document.querySelector('.card-text-deceased');
+var api = "https://disease.sh/v3/covid-19/countries";
+var world_api = "https://disease.sh/v3/covid-19/all";
 
 function add_row(flag,country,infected,recovered,deceased)
 {
