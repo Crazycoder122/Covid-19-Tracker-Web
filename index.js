@@ -113,8 +113,10 @@ function updateStatus() {
     // Get the header of the currently sorted column
     const sortedHeader = document.querySelector('[data-sorted="true"]');
 
+    const trs = getRows();
+
     // Check whether all rows are hidden
-    const noVisibleRows = getRows().every(tr => tr.hidden);
+    const noVisibleRows = trs.length > 0 && getRows().every(tr => tr.hidden);
 
     if(noVisibleRows) {
         statusDiv.textContent = "There are no countries matching your search query."
