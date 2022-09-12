@@ -34,7 +34,6 @@ h1, h2, h3, h4, h5, p {
   min-height: calc(100vh - 20px);
   padding: 10px 0px;
   background-color: #faf8f8;
-  justify-content: space-evenly;
 }
 
 .main > div {
@@ -80,7 +79,6 @@ h1, h2, h3, h4, h5, p {
 
 .virus-icon {
   display: inline-block;
-  width: 40px;
   height: 40px;
   background-image: url("./res/virus.svg");
   background-position: center;
@@ -166,23 +164,21 @@ tr:hover .deceased {
   background-color: var(--deceased-bg);
 }
 
-.header, .data-row {
+.data-row {
   text-align: center;
   color: #434343;
 }
 
-.buttons, .basis-of-sorting {
-  text-align: center;
-}
-
-.basis-of-sorting {
+.status {
   font-family: 'Oxygen', sans-serif;
   color: #666666;
 }
 
-.world-stats, .search-container, .cards-container {
+.world-stats, .search-container, .cards-container, .status {
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   max-width: 720px;
   width: 100vw;
 }
@@ -205,10 +201,11 @@ h5 {
 
 .search-container, .cards-container {
   flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .search {
-  flex-grow: 1;
+  flex-grow: 0.95;
   height: 30px;
   border-radius: 10px;
   border: none;
@@ -218,3 +215,33 @@ h5 {
   color: #502121;
 }
 
+.button {
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: #bf7575;
+  color: #fafafa;
+}
+
+.button-clear {
+  flex-basis: 100px;
+}
+
+th:hover, .button:hover {
+  cursor: pointer;
+  user-select: none;
+}
+
+th[data-sorted="true"][data-asc="true"] {
+  background-image: url("./res/triangle-up.svg");
+  background-repeat: no-repeat;
+  background-size: 9px;
+  background-position: calc(96% - 3px) 55%;
+}
+
+th[data-sorted="true"][data-asc="false"] {
+  background-image: url("./res/triangle-down.svg");
+  background-repeat: no-repeat;
+  background-size: 9px;
+  background-position: calc(96% - 3px) 55%;
+}

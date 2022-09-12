@@ -38,22 +38,21 @@
           class="search"
           placeholder="Search for a country..."
         />
+        <button class="button button-clear">Clear</button>
       </div>
       <div class="table-container">
         <table class="country-data">
           <tbody>
             <tr class="header-row">
-              <th class="country-header">Country</th>
-              <th class="infected-header">Infected</th>
-              <th class="recovered-header">Recovered</th>
-              <th class="deceased-header">Deceased</th>
+              <th data-content="country" data-sorted="true" data-asc="true" class="country-header">Country</th>
+              <th data-content="infected" data-sorted="false" data-asc="true" class="infected-header">Infected</th>
+              <th data-content="recovered" data-sorted="false" data-asc="true" class="recovered-header">Recovered</th>
+              <th data-content="deceased" data-sorted="false" data-asc="true" class="deceased-header">Deceased</th>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="basis-of-sorting">
-          The list is sorted based on alphabetical ordering of country names.
-      </div>
+      <div class="status"></div>
     </div>
   </body>
 </html>
