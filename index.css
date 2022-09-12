@@ -1,20 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Baumans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
 
-:root {
-  --country-bg: #f7ece4;
-  --infected-bg: #f7f5e4;
-  --recovered-bg: #e4f7e7;
-  --deceased-bg: #f7e4e4;
-  --country-header-bg: #f7e6d9;
-  --infected-header-bg: #f7f4d9;
-  --recovered-header-bg: #d9f7de;
-  --deceased-header-bg: #f7d9d9;
-  --country-hover-bg: #eae0d8;
-  --infected-hover-bg: #eae8d8;
-  --recovered-hover-bg: #d8eadb;
-  --deceased-hover-bg: #ead8d8;
-}
+@import url('./colors.css');
 
 html, body {
   margin: 0;
@@ -33,7 +20,7 @@ h1, h2, h3, h4, h5, p {
   align-items: center;
   min-height: calc(100vh - 20px);
   padding: 10px 0px;
-  background-color: #faf8f8;
+  background-color: var(--main-bg);
 }
 
 .main > div {
@@ -88,7 +75,7 @@ h1, h2, h3, h4, h5, p {
 }
 
 .heading-text {
-  color: #b85454;
+  color: var(--heading-fg);
   font-family: 'Baumans', sans-serif;
   line-height: 40px;
 }
@@ -166,12 +153,12 @@ tr:hover .deceased {
 
 .data-row {
   text-align: center;
-  color: #434343;
+  color: var(--secondary-fg);
 }
 
 .status {
   font-family: 'Oxygen', sans-serif;
-  color: #666666;
+  color: var(--status-fg);
 }
 
 .world-stats, .search-container, .cards-container, .status {
@@ -190,7 +177,7 @@ h5 {
 .world-heading {
   text-align: center;
   font-family: 'Baumans', sans-serif;
-  color: #b85454;
+  color: var(--heading-fg);
   margin: 0;
   margin-bottom: 10px;
 }
@@ -211,16 +198,16 @@ h5 {
   border: none;
   padding-left: 10px;
   font-size: 1em;
-  background-color: #f7ebeb;
-  color: #502121;
+  background-color: var(--search-bg);
+  color: var(--search-fg);
 }
 
 .button {
   height: 30px;
   border: none;
   border-radius: 5px;
-  background-color: #bf7575;
-  color: #fafafa;
+  background-color: var(--button-bg);
+  color: var(--button-fg);
 }
 
 .button-clear {

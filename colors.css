@@ -1,0 +1,24 @@
+:root {
+  --main-bg: #faf8f8;
+  --country-bg: #f7ece4;
+  --infected-bg: #f7f5e4;
+  --recovered-bg: #e4f7e7;
+  --deceased-bg: #f7e4e4;
+  --country-header-bg: #f7e6d9;
+  --infected-header-bg: #f7f4d9;
+  --recovered-header-bg: #d9f7de;
+  --deceased-header-bg: #f7d9d9;
+  --country-hover-bg: #eae0d8;
+  --infected-hover-bg: #eae8d8;
+  --recovered-hover-bg: #d8eadb;
+  --deceased-hover-bg: #ead8d8;
+  --heading-fg: #b85454;
+  --search-bg: #f7ebeb;
+  --search-fg: #502121;
+  --button-bg: #bf7575;
+  --button-fg: #fbf6f6;
+  --primary-fg: #212121;
+  --secondary-fg: #434343;
+  --status-fg: #666666;
+}
+
