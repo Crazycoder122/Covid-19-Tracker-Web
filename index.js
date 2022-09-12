@@ -170,6 +170,7 @@ function setupListeners() {
         searchBar.value = '';
         // Make all the rows visible
         getRows().forEach(tr => { tr.hidden = false });
+        updateStatus();
     });
 
     // For when the search bar receives input
