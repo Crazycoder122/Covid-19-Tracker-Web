@@ -3,6 +3,15 @@
 
 @import url('./colors.css');
 
+/**
+ * Generic styles
+ *
+ * Mainly to remove browser-default
+ * margins and paddings
+ * and stretch the document
+ * to fit the viewport
+ */
+
 html, body {
   margin: 0;
   padding: 0;
@@ -13,6 +22,12 @@ html, body {
 h1, h2, h3, h4, h5, p {
   margin: 0;
 }
+
+h5 {
+  font-size: 15px;
+}
+
+/** Main container **/
 
 .main {
   display: flex;
@@ -26,6 +41,8 @@ h1, h2, h3, h4, h5, p {
 .main > div {
   margin: 10px 0px;
 }
+
+/** Cards **/
 
 .cards-container {
   display: flex;
@@ -55,6 +72,8 @@ h1, h2, h3, h4, h5, p {
   background-color: var(--deceased-bg);
 }
 
+/** Headings **/
+
 .heading {
   display: flex;
   flex-flow: row nowrap;
@@ -80,99 +99,7 @@ h1, h2, h3, h4, h5, p {
   line-height: 40px;
 }
 
-.table-container {
-  max-width: 100vw;
-  max-height: 55vh;
-  overflow: scroll;
-}
-
-.country-data {
-  min-width: 720px;
-  border-spacing: 0;
-  font-family: 'Oxygen', sans-serif;
-}
-
-td {
-  transition: all 0.2s ease;
-}
-
-.country-data th, .country-data td {
-  padding: 10px 5px;
-}
-
-tr:hover .country {
-  background-color: var(--country-hover-bg);
-}
-
-tr:hover .infected {
-  background-color: var(--infected-hover-bg);
-}
-
-tr:hover .recovered {
-  background-color: var(--recovered-hover-bg);
-}
-
-tr:hover .deceased {
-  background-color: var(--deceased-hover-bg);
-}
-
-.country-header {
-  background-color: var(--country-header-bg);
-}
-
-.infected-header {
-  background-color: var(--infected-header-bg);
-}
-
-.recovered-header {
-  background-color: var(--recovered-header-bg);
-}
-
-.deceased-header {
-  background-color: var(--deceased-header-bg);
-}
-
-.country {
-  background-color: var(--country-bg);
-  background-position: 10px center;
-  background-size: 25px;
-  background-repeat: no-repeat;
-}
-
-.infected {
-  background-color: var(--infected-bg);
-}
-
-.recovered {
-  background-color: var(--recovered-bg);
-}
-
-.deceased {
-  background-color: var(--deceased-bg);
-}
-
-.data-row {
-  text-align: center;
-  color: var(--secondary-fg);
-}
-
-.status {
-  font-family: 'Oxygen', sans-serif;
-  color: var(--status-fg);
-}
-
-.world-stats, .search-container, .cards-container, .status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  max-width: 720px;
-  width: 100vw;
-}
-
-h5 {
-  font-size: 15px;
-}
+/** World stats **/
 
 .world-heading {
   text-align: center;
@@ -185,6 +112,17 @@ h5 {
 .world-stats {
   flex-flow: column wrap;
 }
+
+.world-stats, .search-container, .cards-container, .status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 720px;
+  width: 100vw;
+}
+
+/** Search bar and clear button **/
 
 .search-container, .cards-container {
   flex-flow: row wrap;
@@ -214,21 +152,80 @@ h5 {
   flex-basis: 100px;
 }
 
+/** Table **/
+
+.table-container {
+  max-width: 100vw;
+  max-height: 55vh;
+  overflow: scroll;
+}
+
+.country-data {
+  min-width: 720px;
+  border-spacing: 0;
+  font-family: 'Oxygen', sans-serif;
+}
+
+.country-data th, .country-data td {
+  padding: 10px 5px;
+}
+
+/* Hover styles */
+tr:hover .country { background-color: var(--country-hover-bg); }
+tr:hover .infected { background-color: var(--infected-hover-bg); }
+tr:hover .recovered { background-color: var(--recovered-hover-bg); }
+tr:hover .deceased { background-color: var(--deceased-hover-bg); }
+
+/* Header styles */
+.country-header { background-color: var(--country-header-bg); }
+.infected-header { background-color: var(--infected-header-bg); }
+.recovered-header { background-color: var(--recovered-header-bg); }
+.deceased-header { background-color: var(--deceased-header-bg); }
+
+/* Last 3 properties are for the flag (as background image) */
+.country {
+  background-color: var(--country-bg);
+  background-position: 10px center;
+  background-size: 25px;
+  background-repeat: no-repeat;
+}
+.infected { background-color: var(--infected-bg); }
+.recovered { background-color: var(--recovered-bg); }
+.deceased { background-color: var(--deceased-bg); }
+
+.data-row {
+  text-align: center;
+  color: var(--secondary-fg);
+}
+
+.data-row td {
+  transition: all 0.2s ease;
+}
+
 th:hover, .button:hover {
   cursor: pointer;
   user-select: none;
 }
 
-th[data-sorted="true"][data-asc="true"] {
-  background-image: url("./res/triangle-up.svg");
+/* For the "sort triangle" */
+th {
   background-repeat: no-repeat;
   background-size: 9px;
   background-position: calc(96% - 3px) 55%;
 }
 
+th[data-sorted="true"][data-asc="true"] {
+  background-image: url("./res/triangle-up.svg");
+}
+
 th[data-sorted="true"][data-asc="false"] {
   background-image: url("./res/triangle-down.svg");
-  background-repeat: no-repeat;
-  background-size: 9px;
-  background-position: calc(96% - 3px) 55%;
 }
+
+/** Status **/
+
+.status {
+  font-family: 'Oxygen', sans-serif;
+  color: var(--status-fg);
+}
+
