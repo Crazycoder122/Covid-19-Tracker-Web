@@ -1,368 +1,243 @@
-var main_container=document.getElementsByClassName("main-container")[0];
-var country=document.getElementsByClassName("country");
-let infected=document.getElementsByClassName("infected");
-let recovered=document.getElementsByClassName("recovered");
-let deaths=document.getElementsByClassName("deaths");
-let update_btn=document.getElementsByClassName("update")[0];
-let inf_inc=document.getElementsByClassName("infected-inc")[0];
-let inf_dec=document.getElementsByClassName("infected-dec")[0];
-let rec_inc=document.getElementsByClassName("recovered-inc")[0];
-let rec_dec=document.getElementsByClassName("recovered-dec")[0];
-let dead_inc=document.getElementsByClassName("death-inc")[0];
-let dead_dec=document.getElementsByClassName("death-dec")[0];
-let list_sort_heading=document.getElementsByClassName("list-sort-heading")[0];
-let search_ip=document.getElementsByClassName("search-ip")[0];
-let view_full=document.getElementsByClassName("full-view")[0];
-let inf_world_count=document.getElementsByClassName("inf-world-count")[0];
-let rec_world_count=document.getElementsByClassName("rec-world-count")[0];
-let death_world_count=document.getElementsByClassName("death-world-count")[0];
-var api="https://disease.sh/v3/covid-19/countries";
-var world_api="https://disease.sh/v3/covid-19/all";
+// API URLs
+const countryStatsUrl = "https://disease.sh/v3/covid-19/countries";
+const worldStatsUrl = "https://disease.sh/v3/covid-19/all";
 
-function add_row(flag,country,infected,recovered,deceased)
-{
-    let created_div_1=document.createElement('div');
-    created_div_1.classList.add("data-row");
+// Storing commonly used elements
+const countryDataTable = document.querySelector('.country-data');
+const worldDataCards = {
+    infected: document.querySelector('.card-text-infected'),
+    recovered: document.querySelector('.card-text-recovered'),
+    deceased: document.querySelector('.card-text-deceased')
+}
+const statusDiv = document.querySelector('.status');
+const searchBar = document.querySelector('.search');
+const searchClearButton = document.querySelector('.button-clear');
+const tableHeaders = [...document.querySelectorAll('th')];
 
-    let country_div=document.createElement('div');
-    country_div.innerHTML=`<img src="${flag}" class="flag"> &nbsp; ${country}`;
-    country_div.classList.add("country")
-
-
-    let infected_div=document.createElement('div');
-    infected_div.innerHTML=infected
-    infected_div.classList.add("infected")
-
-    let recovered_div=document.createElement('div');
-    recovered_div.innerHTML=recovered;
-    recovered_div.classList.add("recovered")
-
-    let death_div=document.createElement('div');
-    death_div.innerHTML=deceased;
-    death_div.classList.add("deaths");
-
-    created_div_1.appendChild(country_div);
-    created_div_1.appendChild(infected_div);
-    created_div_1.appendChild(recovered_div);
-    created_div_1.appendChild(death_div);
-
-    main_container.appendChild(created_div_1);
+/**
+ * Returns all the rows in the
+ * table except the header
+ */
+function getRows() {
+    const tbody = countryDataTable.children[0];
+    return [...tbody.children].slice(1);
 }
 
-function add_row_while_ip(start,end,flag,country,infected,recovered,deceased)
-{
-    let created_div_1=document.createElement('div');
-    created_div_1.classList.add("data-row");
+/**
+ * Adds a new row into the table
+ */
+function addRow(flagUrl, country, infected, recovered, deceased) {
 
-    let country_div=document.createElement('div');
-    country_div.innerHTML=`<img src="${flag}" class="flag"> &nbsp;`;
-    for(let i=0;i<start;i++)
-    country_div.innerHTML+=`${country[i]}`;
-    for(let i=start;i<end;i++)
-    country_div.innerHTML+=`<span class='ip-dec'>${country[i]}</span>`;
-    for(let i=end;i<country.length;i++)
-    country_div.innerHTML+=`${country[i]}`;
+    // Create a new row element
+    const row = document.createElement('tr');
+    row.classList.add("data-row");
 
-    country_div.classList.add("country")
+    // To store the 4 tds
+    const cells = {}
 
+    cells.country = document.createElement('td');
+    cells.country.classList.add('country');
+    cells.country.style.backgroundImage = `url("${flagUrl}")`;
+    cells.country.appendChild(document.createTextNode(country));
 
-    let infected_div=document.createElement('div');
-    infected_div.innerHTML=infected
-    infected_div.classList.add("infected")
+    cells.infected = document.createElement('td');
+    cells.infected.classList.add('infected')
+    cells.infected.textContent = infected
 
-    let recovered_div=document.createElement('div');
-    recovered_div.innerHTML=recovered;
-    recovered_div.classList.add("recovered")
+    cells.recovered = document.createElement('td');
+    cells.recovered.classList.add('recovered')
+    cells.recovered.textContent = recovered;
 
-    let death_div=document.createElement('div');
-    death_div.innerHTML=deceased;
-    death_div.classList.add("deaths");
+    cells.deceased = document.createElement('td');
+    cells.deceased.classList.add('deceased')
+    cells.deceased.textContent = deceased;
 
-    created_div_1.appendChild(country_div);
-    created_div_1.appendChild(infected_div);
-    created_div_1.appendChild(recovered_div);
-    created_div_1.appendChild(death_div);
+    // Append all the cells to the row element
+    for(const idx in cells)
+        row.appendChild(cells[idx]);
 
-    main_container.appendChild(created_div_1);
+    // Append the row element to the tbody
+    countryDataTable.children[0].appendChild(row);
 }
 
-function update_data()
-{
-    main_container.innerHTML='';
-    
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
+/**
+ * Removes all data rows
+ * from the table
+ */
+function removeAllRows() {
+    while(countryDataTable.children[0].children.length != 1)
+        countryDataTable.children[0].removeChild(
+            countryDataTable.children[0].lastChild
+        );
+}
+
+/**
+ * Fetches COVID-19 data
+ * country-wise
+ */
+function fetchCountryData() {
+    fetch(countryStatsUrl)
+    .then(response => response.json())
+    .then(data => {
+        for(const record of data) {
+            addRow(
+                record.countryInfo["flag"],
+                record.country,
+                record.cases,
+                record.recovered,
+                record.deaths
+            )
         }
-    })
+    });
 }
 
-function update_world_data()
-{
-    fetch(world_api)
-    .then((d)=>{return d.json();})
-    .then((d)=>{
-        inf_world_count.innerHTML=d.cases;
-        rec_world_count.innerHTML=d.recovered;
-        death_world_count.innerHTML=d.deaths;
-    })
+/**
+ * Fetches COVID-19 data
+ * of the whole world
+ */
+function fetchWorldData() {
+    fetch(worldStatsUrl)
+    .then(response => response.json())
+    .then(data => {
+        worldDataCards.infected.textContent = data.cases;
+        worldDataCards.recovered.textContent = data.recovered;
+        worldDataCards.deceased.textContent = data.deaths;
+    });
 }
 
-function set_heading()
-{
-    country[0].style.backgroundColor="rgb(143, 97, 37)";
-    infected[0].style.backgroundColor="rgb(199, 199, 22)";
-    recovered[0].style.backgroundColor="rgb(28, 160, 28)";
-    deaths[0].style.backgroundColor="rgb(211, 93, 93)";
+/**
+ * Updates the status text
+ */
+function updateStatus() {
+
+    // Get the header of the currently sorted column
+    const sortedHeader = document.querySelector('[data-sorted="true"]');
+
+    const trs = getRows();
+
+    // Check whether all rows are hidden
+    const noVisibleRows = trs.length > 0 && trs.every(tr => tr.hidden);
+
+    if(noVisibleRows) {
+        statusDiv.textContent = "There are no countries matching your search query."
+        return; // Nothing more to do
+    }
+
+    // Key by which the data is sorted
+    const sortingKey = sortedHeader.dataset.content;
+    // Whether the data is in ascending order
+    const isAscending = sortedHeader.dataset.asc === 'true';
+    // Whether the data is numeric
+    // (all columns except 'country' are)
+    const isNumeric = sortingKey !== 'country';
+    // Whether the data has a search query filter
+    const hasFilter = typeof trs.find(tr => tr.hidden) !== 'undefined';
+
+    statusDiv.textContent = "The list is sorted in";
+    statusDiv.textContent += (isAscending ? " ascending" : " descending");
+    statusDiv.textContent += (isNumeric ? " numeric" : " alphabetical");
+    statusDiv.textContent += " order of";
+    switch(sortingKey) {
+        case 'country':
+            statusDiv.textContent += " country names";
+            break;
+        case 'infected':
+            statusDiv.textContent += " infected cases";
+            break;
+        case 'recovered':
+            statusDiv.textContent += " recovered cases";
+            break;
+        case 'deceased':
+            statusDiv.textContent += " deceased cases";
+            break;
+    }
+
+    if(hasFilter)
+        statusDiv.textContent += " and filtered according to your search query"
+
+    statusDiv.textContent += ".";
+
 }
 
-function update_by_inc_inf()
-{
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
-       
-        //InPlace Sorting
+/**
+ * Adds all requisite event listeners
+ */
+function setupListeners() {
 
-        for(i=0;i<d.length;i++)
-            {
-                for(j=i+1;j<d.length;j++)
-                {
-                    if(d[i].cases>d[j].cases)
-                    {
-                        temp=d[i];
-                        d[i]=d[j];
-                        d[j]=temp;
-                    }
-                }
-            }
+    // For when the 'clear' button is clicked
+    searchClearButton.addEventListener('click', _ev => {
+        // Empty the search bar's value
+        searchBar.value = '';
+        // Make all the rows visible
+        getRows().forEach(tr => { tr.hidden = false });
+        updateStatus();
+    });
 
-        main_container.innerHTML='';
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-        }
-    })
+    // For when the search bar receives input
+    searchBar.addEventListener('input', _ev => {
+        // For every row
+        getRows().forEach(tr => {
+            // Convert the country name to lower case
+            lowerCaseCountryName = tr.children[0].textContent.toLowerCase();
+            // Convert the search query to lower case
+            lowerCaseSearchQuery = searchBar.value.toLowerCase();
+            // Check whether the search query is a substring of the
+            // country name and hide the row if it isn't
+            tr.hidden = !lowerCaseCountryName.includes(lowerCaseSearchQuery)
+        });
+        updateStatus();
+    });
+
+    // For all the table headers
+    for(const idx in tableHeaders) {
+
+        const th = tableHeaders[idx];
+        // For when the table header is clicked
+        th.addEventListener('click', _ev => {
+            // Get all the data rows
+            const trs = getRows();
+            // Whether the column is numeric
+            const isNumeric = th.dataset.content !== 'country';
+            // Whether the column is ascending
+            const isAscending = th.dataset.asc === 'true';
+            // Whether the column is sorted
+            const isSorted = th.dataset.sorted === 'true';
+            // Sort the rows
+            trs.sort((a, b) => {
+                // When the clicked column is currently sorted
+                // in ascending order, switch to descending sort
+                if(isAscending && isSorted) [a, b] = [b, a];
+                return a.children[idx].textContent.localeCompare(
+                    b.children[idx].textContent, undefined,
+                    { numeric: isNumeric }
+                )
+            });
+
+            // Append all every tr to the tbody
+            for(const tr of trs)
+                countryDataTable.children[0].appendChild(tr);
+
+            // Update 'data-asc'
+            th.dataset.asc = String(!isAscending || !isSorted);
+
+            // For all the headers
+            tableHeaders.forEach(thElem => {
+                // Set 'data-sorted' to true only
+                // for the currently sorted th, and
+                // false for all others
+                thElem.dataset.sorted = String(thElem === th);
+            });
+
+            updateStatus();
+
+        });
+
+    }
+
 }
 
-function update_by_dec_inf()
-{
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
+fetchWorldData();
+fetchCountryData();
+setupListeners();
+updateStatus();
 
-        //InPlace Sorting
-       for(i=0;i<d.length;i++)
-            {
-                for(j=i+1;j<d.length;j++)
-                {
-                    if(d[i].cases<d[j].cases)
-                    {
-                        temp=d[i];
-                        d[i]=d[j];
-                        d[j]=temp;
-                    }
-                }
-            }
-
-        main_container.innerHTML='';
-        
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-        }
-    })
-}
-
-function update_by_inc_rec()
-{
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
-        //InPlace Sorting
-        for(i=0;i<d.length;i++)
-            {
-                for(j=i+1;j<d.length;j++)
-                {
-                    if(d[i].recovered>d[j].recovered)
-                    {
-                        temp=d[i];
-                        d[i]=d[j];
-                        d[j]=temp;
-                    }
-                }
-            }
-        main_container.innerHTML='';
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-        }
-    })
-}
-
-function update_by_dec_rec()
-{
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
-        //InPlace Sorting
-        for(i=0;i<d.length;i++)
-            {
-                for(j=i+1;j<d.length;j++)
-                {
-                    if(d[i].recovered<d[j].recovered)
-                    {
-                        temp=d[i];
-                        d[i]=d[j];
-                        d[j]=temp;
-                    }
-                }
-            }
-
-        main_container.innerHTML='';
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-        }
-    })
-}
-
-
-function update_by_inc_deaths()
-{
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
-        //InPlace Sorting
-        for(i=0;i<d.length;i++)
-            {
-                for(j=i+1;j<d.length;j++)
-                {
-                    if(d[i].deaths>d[j].deaths)
-                    {
-                        temp=d[i];
-                        d[i]=d[j];
-                        d[j]=temp;
-                    }
-                }
-            }
-
-        main_container.innerHTML='';
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-        }
-    })
-}
-
-
-function update_by_dec_deaths()
-{
-    fetch(api)
-    .then((raw_data)=>{return raw_data.json()})
-    .then((d)=>{
-       //InPlace Sorting
-       for(i=0;i<d.length;i++)
-       {
-           for(j=i+1;j<d.length;j++)
-           {
-               if(d[i].deaths<d[j].deaths)
-               {
-                   temp=d[i];
-                   d[i]=d[j];
-                   d[j]=temp;
-               }
-           }
-       }
-        main_container.innerHTML='';
-        for(let i=0;i<d.length;i++)
-        {
-            add_row(d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-        }
-    })
-}
-
-
-update_data();
-update_world_data();
-set_heading();
-
-
-update_btn.addEventListener('click',function(){
-    update_data();
-    update_world_data();
-    list_sort_heading.innerHTML='The List is Sorted Based on Alphabetical Ordering of Country Names';
-})
-
-
-inf_inc.addEventListener('click',function(){
-    update_by_inc_inf();
-    list_sort_heading.innerHTML='The List is in Increasing Order of Infected Cases';
-})
-
-inf_dec.addEventListener('click',function(){
-    update_by_dec_inf();
-    list_sort_heading.innerHTML='The List is in Decreasing Order of Infected Cases';
-})
-
-rec_inc.addEventListener('click',function(){
-    update_by_inc_rec();
-    list_sort_heading.innerHTML='The List is in Increasing Order of Recovered Cases'
-})
-
-rec_dec.addEventListener('click',function(){
-    update_by_dec_rec();
-    list_sort_heading.innerHTML='The List is in Decreasing Order of Recovered Cases'
-})
-
-dead_inc.addEventListener('click',function(){
-    update_by_inc_deaths();
-    list_sort_heading.innerHTML='The List is in Increasing Order of Deaths';
-})
-
-dead_dec.addEventListener('click',function(){
-    update_by_dec_deaths();
-    list_sort_heading.innerHTML='The List is in Decreasing Order of Deaths';
-})
-
-
-view_full.addEventListener('click',function(){
-    list_sort_heading.innerHTML='The List is Sorted Based on Alphabetical Ordering of Country Names';
-    search_ip.value='';
-    update_data();
-})
-
-
-search_ip.addEventListener('input',function(){
-    if(search_ip.value=='')
-        list_sort_heading.innerHTML='The List is Sorted Based on Alphabetical Ordering of Country Names';
-
-    let name=search_ip.value.toLowerCase();
-
-    fetch(api)
-    .then((d)=>{return d.json()})
-    .then((d)=>{
-        let count=0;
-        main_container.innerHTML='';
-        list_sort_heading.innerHTML='List Showing Those Countries Whose Name Somewhat or Fully Matches with your Search'
-        
-        for(let i=0;i<d.length;i++)
-        {
-            if(d[i].country.toLowerCase().includes(name))
-            {
-                count++;
-                let start=d[i].country.toLowerCase().indexOf(name);
-                let end=start+name.length;
-                add_row_while_ip(start,end,d[i].countryInfo["flag"],d[i].country,d[i].cases,d[i].recovered,d[i].deaths)
-            }
-        }
-        
-        if(count==0)
-        {
-           main_container.innerHTML='<h3 class="not-found">Sorry,No Countries Match Your Search!!!</h3>'
-        }
-    })
-})
