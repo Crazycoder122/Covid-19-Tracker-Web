@@ -116,7 +116,7 @@ function updateStatus() {
     const trs = getRows();
 
     // Check whether all rows are hidden
-    const noVisibleRows = trs.length > 0 && getRows().every(tr => tr.hidden);
+    const noVisibleRows = trs.length > 0 && trs.every(tr => tr.hidden);
 
     if(noVisibleRows) {
         statusDiv.textContent = "There are no countries matching your search query."
@@ -131,7 +131,7 @@ function updateStatus() {
     // (all columns except 'country' are)
     const isNumeric = sortingKey !== 'country';
     // Whether the data has a search query filter
-    const hasFilter = searchBar.value !== '';
+    const hasFilter = typeof trs.find(tr => tr.hidden) !== 'undefined';
 
     statusDiv.textContent = "The list is sorted in";
     statusDiv.textContent += (isAscending ? " ascending" : " descending");
